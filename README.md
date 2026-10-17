@@ -48,3 +48,4 @@ response = {
 - `review_required`: signals the user must review and classifier isn't ready
 
 Security: validate content type and upload sizes upstream; randomize file names; clean files after retention period; load `joblib` weights only from your trusted training script (pickle is unsafe for untrusted files).
+# Lighthouse-AI
