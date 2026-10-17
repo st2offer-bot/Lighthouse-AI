@@ -28,3 +28,22 @@ outputs/
 
 # macOS
 .DS_Store
+# Local video uploads
+backend/uploads/
+
+# YOLO weights
+models/
+*.pth
+
+# Local results
+yolo_result.json
+*_result.json
+
+# Uploaded videos
+backend/uploads/
+*.mov
+*.mp4
+
+# Secrets
+.env
+.env.*
