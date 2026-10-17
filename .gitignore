@@ -1,0 +1,30 @@
+# Python environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# ForteBank videos and datasets
+*.mov
+*.mp4
+datasets/
+data/
+
+# Model weights
+*.joblib
+*.pt
+*.pth
+*.onnx
+
+# Secrets
+.env
+.env.*
+*.key
+
+# Generated results
+result.json
+results/
+outputs/
+
+# macOS
+.DS_Store
