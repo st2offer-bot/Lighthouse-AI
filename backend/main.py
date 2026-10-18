@@ -1,3 +1,4 @@
+from backend.report import generate_report
 import os
 import uuid
 import secrets
@@ -38,7 +39,7 @@ def verify_api_key(key: Optional[str]):
 
 def process_job(job_id: str, file_path: str):
     try:
-        result = analyze_video_file(file_path)
+        result = analyze_video_file(file_path, job_id=job_id)
 
         with jobs_lock:
             jobs[job_id].update({
@@ -135,3 +136,34 @@ def get_job(
             raise HTTPException(404, "Job not found")
 
         return dict(job)
+
+
+
+@app.get("/api/v1/jobs/{job_id}/report")
+def get_job_report(
+    job_id: str,
+    x_api_key: Optional[str] = Header(default=None),
+):
+    verify_api_key(x_api_key)
+
+    with jobs_lock:
+        job = jobs.get(job_id)
+
+        if job is None:
+            raise HTTPException(
+                status_code=404,
+                detail="Job not found",
+            )
+
+        status = job.get("status")
+
+        if status != "done":
+            return {
+                "job_id": job_id,
+                "status": status,
+                "ready": False,
+            }
+
+        diagnostic = dict(job.get("diagnostic") or {})
+
+    return generate_report(job_id, diagnostic)
